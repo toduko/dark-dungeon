@@ -1,0 +1,28 @@
+MOVEMENT_SPEED = 15
+
+function init(self)
+	msg.post(".", "acquire_input_focus")
+	self.vel = vmath.vector3()
+end
+
+function update(self, dt)
+	local pos = go.get_position()
+	pos = pos + self.vel * dt
+	go.set_position(pos)
+	self.vel.x = 0
+	self.vel.y = 0
+end
+
+function on_input(self, action_id, action)
+	if action_id == hash("up") then
+		self.vel.y = MOVEMENT_SPEED
+	elseif action_id == hash("down") then
+		self.vel.y = -MOVEMENT_SPEED
+	elseif action_id == hash("left") then
+		self.vel.x = -MOVEMENT_SPEED
+		sprite.set_hflip("#sprite", true)
+	elseif action_id == hash("right") then
+		self.vel.x = MOVEMENT_SPEED
+		sprite.set_hflip("#sprite", false)
+	end
+end
