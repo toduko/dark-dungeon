@@ -1,6 +1,47 @@
-images {
-  image: "/assets/sprites/Warrior/warrior_idle.png"
-  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+animations {
+  id: "idle"
+  images {
+    image: "/assets/sprites/Warrior/warrior_idle.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 60
+  flip_horizontal: 0
+  flip_vertical: 0
+}
+animations {
+  id: "walking"
+  images {
+    image: "/assets/sprites/Warrior/warrior_walking1.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+  }
+  images {
+    image: "/assets/sprites/Warrior/warrior_walking1.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+  }
+  images {
+    image: "/assets/sprites/Warrior/warrior_walking2.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+  }
+  images {
+    image: "/assets/sprites/Warrior/warrior_walking2.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 1
+  flip_horizontal: 0
+  flip_vertical: 0
+}
+animations {
+  id: "attacking"
+  images {
+    image: "/assets/sprites/Warrior/warrior_attack.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+  }
+  playback: PLAYBACK_NONE
+  fps: 1
+  flip_horizontal: 0
+  flip_vertical: 0
 }
 margin: 0
 extrude_borders: 2

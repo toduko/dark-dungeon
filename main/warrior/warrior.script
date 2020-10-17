@@ -1,14 +1,54 @@
 MOVEMENT_SPEED = 15
+MAX_ATTACK_TIMER = 100
+attack_timer = 0
+walking = false
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
 	self.vel = vmath.vector3()
 end
 
+local function handle_walking_anim()
+	if not walking then
+		walking = true
+		sprite.play_flipbook("#sprite", "walking")
+	end
+end
+
+local function attack()
+	if attack_timer == 0 then
+		sprite.play_flipbook("#sprite", "attacking")
+		attack_timer = MAX_ATTACK_TIMER
+		walking = false
+	end
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("collision_response") and message.other_id == hash("/skeleton") and attack_timer > 0 then
+		print("Attacked skeleton")
+	end
+end
+
 function update(self, dt)
 	local pos = go.get_position()
 	pos = pos + self.vel * dt
 	go.set_position(pos)
+
+	if attack_timer > 0 then
+		attack_timer = attack_timer - 1
+	end
+	
+	if self.vel.x ~= 0 or self.vel.y ~= 0 then
+		if attack_timer == 0 then
+			handle_walking_anim()
+		end
+	else
+		walking = false
+		if attack_timer == 0 then
+			sprite.play_flipbook("#sprite", "idle")
+		end
+	end
+	
 	self.vel.x = 0
 	self.vel.y = 0
 end
@@ -21,8 +61,12 @@ function on_input(self, action_id, action)
 	elseif action_id == hash("left") then
 		self.vel.x = -MOVEMENT_SPEED
 		sprite.set_hflip("#sprite", true)
+		physics.set_hflip("#attack collision", true)
 	elseif action_id == hash("right") then
 		self.vel.x = MOVEMENT_SPEED
 		sprite.set_hflip("#sprite", false)
+		physics.set_hflip("#attack collision", false)
+	elseif action_id == hash("attack") or action_id == hash("touch") then
+		attack()
 	end
 end
