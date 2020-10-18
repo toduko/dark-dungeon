@@ -1,5 +1,5 @@
 MOVEMENT_SPEED = 100
-MAX_ATTACK_TIMER = 50
+MAX_ATTACK_TIMER = 20
 attack_timer = 0
 walking = false
 
