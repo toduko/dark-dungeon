@@ -1,5 +1,5 @@
-MOVEMENT_SPEED = 15
-MAX_ATTACK_TIMER = 100
+MOVEMENT_SPEED = 100
+MAX_ATTACK_TIMER = 50
 attack_timer = 0
 walking = false
 
@@ -24,7 +24,14 @@ local function attack()
 end
 
 function on_message(self, message_id, message, sender)
-	if message_id == hash("collision_response") and message.other_id == hash("/skeleton") and attack_timer > 0 then
+	-- special message sent only when 2 kinematic or dynamic bodies collide
+	if message_id == hash("contact_point_response")
+	-- checks the group that should take dmg
+	and message.group == hash("skeleton")
+	-- checks for the collider's group and enables only the weapons to make the attack
+	and sender.fragment == hash("weapon_collision") 
+	-- registers only one attack instead of many
+	and attack_timer == MAX_ATTACK_TIMER - 1  then
 		print("Attacked skeleton")
 	end
 end
@@ -61,11 +68,11 @@ function on_input(self, action_id, action)
 	elseif action_id == hash("left") then
 		self.vel.x = -MOVEMENT_SPEED
 		sprite.set_hflip("#sprite", true)
-		physics.set_hflip("#attack collision", true)
+		physics.set_hflip("#weapon_collision", true)
 	elseif action_id == hash("right") then
 		self.vel.x = MOVEMENT_SPEED
 		sprite.set_hflip("#sprite", false)
-		physics.set_hflip("#attack collision", false)
+		physics.set_hflip("#weapon_collision", false)
 	elseif action_id == hash("attack") or action_id == hash("touch") then
 		attack()
 	end

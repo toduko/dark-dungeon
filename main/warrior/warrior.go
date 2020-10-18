@@ -34,15 +34,15 @@ embedded_components {
   }
 }
 embedded_components {
-  id: "player collision"
+  id: "player_collision"
   type: "collisionobject"
   data: "collision_shape: \"\"\n"
-  "type: COLLISION_OBJECT_TYPE_TRIGGER\n"
+  "type: COLLISION_OBJECT_TYPE_KINEMATIC\n"
   "mass: 0.0\n"
   "friction: 0.1\n"
   "restitution: 0.5\n"
-  "group: \"default\"\n"
-  "mask: \"default\"\n"
+  "group: \"character\"\n"
+  "mask: \"skeleton\"\n"
   "embedded_collision_shape {\n"
   "  shapes {\n"
   "    shape_type: TYPE_BOX\n"
@@ -81,15 +81,15 @@ embedded_components {
   }
 }
 embedded_components {
-  id: "attack collision"
+  id: "weapon_collision"
   type: "collisionobject"
   data: "collision_shape: \"\"\n"
   "type: COLLISION_OBJECT_TYPE_KINEMATIC\n"
   "mass: 0.0\n"
   "friction: 0.1\n"
   "restitution: 0.5\n"
-  "group: \"default\"\n"
-  "mask: \"default\"\n"
+  "group: \"weapon\"\n"
+  "mask: \"skeleton\"\n"
   "embedded_collision_shape {\n"
   "  shapes {\n"
   "    shape_type: TYPE_BOX\n"
