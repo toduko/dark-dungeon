@@ -1,0 +1,25 @@
+skeleton_health = 10
+
+local function create_skeletons(skeleton_id)
+	local pos = go.get_position()
+	pos.y = vmath.lerp(math.random(), 100, 700)
+	pos.x = vmath.lerp(math.random(), 100, 500)
+	local skeleton_component = "#skeleton_factory"
+	local go_address = factory.create(skeleton_component, pos, nil, {}, 1.0)
+end
+
+function init(self)
+	for i = 1, 5 do
+		create_skeletons("skeleton")
+	end
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("skeleton_hit") then 
+		skeleton_health = skeleton_health - 2
+		if skeleton_health <= 0 then
+			go.delete()
+		end
+	end
+
+end

@@ -3,6 +3,7 @@ MAX_ATTACK_TIMER = 20
 attack_timer = 0
 walking = false
 warrior_dmg = 2
+skeleton_id = ""
 
 
 function init(self)
@@ -26,13 +27,14 @@ local function attack()
 end
 
 function on_message(self, message_id, message, sender)
+	
 	if message_id == hash("contact_point_response")
 	and message.group == hash("skeleton")
 	and sender.fragment == hash("weapon_collision") 
 	and attack_timer == MAX_ATTACK_TIMER - 1  then
 		print("Attacked skeleton")
-		msg.post("/skeleton#skeleton", "attacked_skeleton", {})
-	end
+		msg.post(message.other_id, "skeleton_hit")
+	end	
 end
 
 function update(self, dt)

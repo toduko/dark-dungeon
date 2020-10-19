@@ -1,15 +1,15 @@
 skeleton_health = 10
 
 function init(self)
-	msg.post(".", "acquire_input_focus")
 	self.vel = vmath.vector3()
 end
 
 function on_message(self, message_id, message, sender)
-	if message_id == hash("attacked_skeleton") then
+	if message_id == hash("skeleton_hit") then 
 		skeleton_health = skeleton_health - 2
 		if skeleton_health <= 0 then
 			go.delete()
+			skeleton_health = 10
 		end
-	end	
+	end
 end
