@@ -12,6 +12,7 @@ use_accelerometer = 0
 width = 1280
 height = 720
 update_frequency = 60
+vsync = 0
 
 [script]
 shared_state = 1

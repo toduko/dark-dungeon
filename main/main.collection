@@ -39,6 +39,26 @@ instances {
     z: 0.9
   }
 }
+instances {
+  id: "skeleton1"
+  prototype: "/main/skeleton/skeleton.go"
+  position {
+    x: 500.0
+    y: 400.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 0.869
+    y: 0.906
+    z: 0.9
+  }
+}
 scale_along_z: 0
 embedded_instances {
   id: "go"

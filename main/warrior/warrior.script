@@ -2,6 +2,8 @@ MOVEMENT_SPEED = 100
 MAX_ATTACK_TIMER = 20
 attack_timer = 0
 walking = false
+warrior_dmg = 2
+
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
@@ -24,15 +26,12 @@ local function attack()
 end
 
 function on_message(self, message_id, message, sender)
-	-- special message sent only when 2 kinematic or dynamic bodies collide
 	if message_id == hash("contact_point_response")
-	-- checks the group that should take dmg
 	and message.group == hash("skeleton")
-	-- checks for the collider's group and enables only the weapons to make the attack
 	and sender.fragment == hash("weapon_collision") 
-	-- registers only one attack instead of many
 	and attack_timer == MAX_ATTACK_TIMER - 1  then
 		print("Attacked skeleton")
+		msg.post("/skeleton#skeleton", "attacked_skeleton", {})
 	end
 end
 
