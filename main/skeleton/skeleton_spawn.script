@@ -13,13 +13,3 @@ function init(self)
 		create_skeletons("skeleton")
 	end
 end
-
-function on_message(self, message_id, message, sender)
-	if message_id == hash("skeleton_hit") then 
-		skeleton_health = skeleton_health - 2
-		if skeleton_health <= 0 then
-			go.delete()
-		end
-	end
-
-end
