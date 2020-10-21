@@ -1,5 +1,5 @@
 MOVEMENT_SPEED = 100
-MAX_ATTACK_TIMER = 20
+MAX_ATTACK_TIMER = 25
 attack_timer = 0
 walking = false
 warrior_dmg = 2
@@ -38,13 +38,15 @@ function on_message(self, message_id, message, sender)
 end
 
 function update(self, dt)
+	if attack_timer > 0 then
+		attack_timer = attack_timer - 1
+		self.vel.x = 0
+		self.vel.y = 0
+	end
+	
 	local pos = go.get_position()
 	pos = pos + self.vel * dt
 	go.set_position(pos)
-
-	if attack_timer > 0 then
-		attack_timer = attack_timer - 1
-	end
 	
 	if self.vel.x ~= 0 or self.vel.y ~= 0 then
 		if attack_timer == 0 then
