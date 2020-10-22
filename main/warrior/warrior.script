@@ -3,12 +3,13 @@ MAX_ATTACK_TIMER = 25
 attack_timer = 0
 walking = false
 warrior_dmg = 2
-skeleton_id = ""
 
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
 	self.vel = vmath.vector3()
+	msg.post("camera", "follow")
+
 end
 
 local function handle_walking_anim()
@@ -34,7 +35,7 @@ function on_message(self, message_id, message, sender)
 	and attack_timer == MAX_ATTACK_TIMER - 1  then
 		print("Attacked skeleton")
 		msg.post(message.other_id, "skeleton_hit")
-	end	
+	end
 end
 
 function update(self, dt)
@@ -61,6 +62,8 @@ function update(self, dt)
 	
 	self.vel.x = 0
 	self.vel.y = 0
+
+
 end
 
 function on_input(self, action_id, action)

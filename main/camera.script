@@ -1,0 +1,10 @@
+function init(self)
+	msg.post("#camera", "acquire_camera_focus")
+end
+
+
+function update(self, dt)
+	local window_width, window_height = window.get_size()
+
+	go.set_position(vmath.vector3(-window_width / 2, -window_height / 2, 0), ".")
+end
