@@ -1,5 +1,6 @@
 skeleton_health = 10
-SKELETON_DMG = 2
+SKELETON_DMG = 5
+skeleton_armor = 2
 
 function init(self)
 	self.vel = vmath.vector3()
@@ -7,7 +8,9 @@ end
 
 function on_message(self, message_id, message, sender)
 	if message_id == hash("skeleton_hit") then 
-		skeleton_health = skeleton_health - message.warrior_dmg
+		dmg = message.warrior_dmg - skeleton_armor
+		if dmg <= 0 then dmg = 1 end
+		skeleton_health = skeleton_health - dmg
 		if skeleton_health <= 0 then
 			go.delete()
 			skeleton_health = 10

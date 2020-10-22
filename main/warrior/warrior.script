@@ -2,11 +2,12 @@ MOVEMENT_SPEED = 100
 MAX_ATTACK_TIMER = 25
 MAX_HEALTH = 10
 INVINSIBILITY_TIMER = 70
+warrior_armor = 2
 invinsibility = 0
 health = 10
 attack_timer = 0
 walking = false
-warrior_dmg = 2
+warrior_dmg = 5
 
 
 function init(self)
@@ -43,9 +44,12 @@ function on_message(self, message_id, message, sender)
 
 	if message_id == hash("warrior_hit") 
 	and invinsibility <= 0 then
-		health = health - message.SKELETON_DMG
+		dmg = message.SKELETON_DMG - warrior_armor
+		if dmg <= 0 then dmg = 1 end
+		health = health - dmg
 		invinsibility = INVINSIBILITY_TIMER
 		print("Warrior should take dmg!")
+		
 		if health <= 0 then 
 			go.delete()
 		end
