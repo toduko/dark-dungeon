@@ -1,9 +1,9 @@
 MOVEMENT_SPEED = 100
 MAX_ATTACK_TIMER = 25
 MAX_HEALTH = 10
-INVINSIBILITY_TIMER = 70
+INVINCIBILITY_TIMER = 70
 warrior_armor = 2
-invinsibility = 0
+invincibility = 0
 health = 10
 attack_timer = 0
 walking = false
@@ -43,14 +43,15 @@ function on_message(self, message_id, message, sender)
 	end
 
 	if message_id == hash("warrior_hit") 
-	and invinsibility <= 0 then
+	and invincibility <= 0 then
 		dmg = message.SKELETON_DMG - warrior_armor
 		if dmg <= 0 then dmg = 1 end
 		health = health - dmg
-		invinsibility = INVINSIBILITY_TIMER
+		invincibility = INVINCIBILITY_TIMER
 		print("Warrior should take dmg!")
 		
 		if health <= 0 then 
+			msg.post("camera", "unfollow")
 			go.delete()
 		end
 	end
@@ -63,8 +64,8 @@ function update(self, dt)
 		self.vel.y = 0
 	end
 
-	if invinsibility > 0 then
-		invinsibility = invinsibility - 1
+	if invincibility > 0 then
+		invincibility = invincibility - 1
 	end
 	
 	local pos = go.get_position()
