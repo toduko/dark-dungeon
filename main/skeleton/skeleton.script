@@ -2,6 +2,12 @@ skeleton_health = 10
 SKELETON_DMG = 5
 skeleton_armor = 2
 
+knockback_active = false
+player_left = false
+hit_vel = 0
+skeleton_id = hash("")
+skeleton_knockback_power = 10
+
 function init(self)
 	self.vel = vmath.vector3()
 end
@@ -11,6 +17,11 @@ function on_message(self, message_id, message, sender)
 		dmg = message.warrior_dmg - skeleton_armor
 		if dmg <= 0 then dmg = 1 end
 		skeleton_health = skeleton_health - dmg
+		knockback_active = true
+		player_left = player_flipped
+		skeleton_id = go.get_id()
+		hit_vel = 100 * message.knockback_power
+		pos = go.get_position(skeleton_id)
 		if skeleton_health <= 0 then
 			go.delete()
 			skeleton_health = 10
@@ -20,6 +31,20 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("contact_point_response") 
 	and	message.group == hash("character") 
 	and sender.fragment == hash("skeleton_collision") then
-		msg.post("/warrior#warrior", "warrior_hit", {SKELETON_DMG = SKELETON_DMG})
+		msg.post("/warrior#warrior", "warrior_hit", {SKELETON_DMG = SKELETON_DMG, skeleton_knockback_power = skeleton_knockback_power})
+	end
+end
+
+function update(self, dt)
+	
+	if knockback_active then
+		if player_left then
+			self.vel.x = -hit_vel
+		else
+			self.vel.x = hit_vel
+		end 
+		pos = pos + self.vel * dt
+		if skeleton_id ~= nil then go.set_position(pos, skeleton_id) end
+		knockback_active = false
 	end
 end

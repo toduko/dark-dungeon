@@ -9,6 +9,12 @@ attack_timer = 0
 walking = false
 warrior_dmg = 5
 
+knockback_power = 10
+other_knockback_power = 0
+took_dmg = false
+
+player_flipped = false
+
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
@@ -39,11 +45,15 @@ function on_message(self, message_id, message, sender)
 	and sender.fragment == hash("weapon_collision") 
 	and attack_timer == MAX_ATTACK_TIMER - 1  then
 		print("Attacked skeleton")
-		msg.post(message.other_id, "skeleton_hit", {warrior_dmg = warrior_dmg})
+		msg.post(message.other_id, "skeleton_hit", {warrior_dmg = warrior_dmg, player_flipped = player_flipped, knockback_power = knockback_power})
 	end
 
 	if message_id == hash("warrior_hit") 
 	and invincibility <= 0 then
+		
+		other_knockback_power = message.skeleton_knockback_power * 100
+		took_dmg = true
+		
 		dmg = message.SKELETON_DMG - warrior_armor
 		if dmg <= 0 then dmg = 1 end
 		health = health - dmg
@@ -67,7 +77,12 @@ function update(self, dt)
 	if invincibility > 0 then
 		invincibility = invincibility - 1
 	end
-	
+
+	if self.vel.x > 0 and took_dmg then
+		self.vel.x = self.vel.x - other_knockback_power
+	elseif self.vel.x < 0 and took_dmg then
+		self.vel.x = self.vel.x + other_knockback_power
+	end
 	local pos = go.get_position()
 	pos = pos + self.vel * dt
 	go.set_position(pos)
@@ -98,10 +113,12 @@ function on_input(self, action_id, action)
 		self.vel.x = -MOVEMENT_SPEED
 		sprite.set_hflip("#sprite", true)
 		physics.set_hflip("#weapon_collision", true)
+		player_flipped = true
 	elseif action_id == hash("right") then
 		self.vel.x = MOVEMENT_SPEED
 		sprite.set_hflip("#sprite", false)
 		physics.set_hflip("#weapon_collision", false)
+		player_flipped = false
 	elseif action_id == hash("attack") or action_id == hash("touch") then
 		attack()
 	end
