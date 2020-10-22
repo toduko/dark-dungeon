@@ -1,5 +1,9 @@
 MOVEMENT_SPEED = 100
 MAX_ATTACK_TIMER = 25
+MAX_HEALTH = 10
+INVINSIBILITY_TIMER = 70
+invinsibility = 0
+health = 10
 attack_timer = 0
 walking = false
 warrior_dmg = 2
@@ -34,7 +38,17 @@ function on_message(self, message_id, message, sender)
 	and sender.fragment == hash("weapon_collision") 
 	and attack_timer == MAX_ATTACK_TIMER - 1  then
 		print("Attacked skeleton")
-		msg.post(message.other_id, "skeleton_hit")
+		msg.post(message.other_id, "skeleton_hit", {warrior_dmg = warrior_dmg})
+	end
+
+	if message_id == hash("warrior_hit") 
+	and invinsibility <= 0 then
+		health = health - message.SKELETON_DMG
+		invinsibility = INVINSIBILITY_TIMER
+		print("Warrior should take dmg!")
+		if health <= 0 then 
+			go.delete()
+		end
 	end
 end
 
@@ -43,6 +57,10 @@ function update(self, dt)
 		attack_timer = attack_timer - 1
 		self.vel.x = 0
 		self.vel.y = 0
+	end
+
+	if invinsibility > 0 then
+		invinsibility = invinsibility - 1
 	end
 	
 	local pos = go.get_position()

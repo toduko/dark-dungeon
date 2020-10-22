@@ -1,4 +1,5 @@
 skeleton_health = 10
+SKELETON_DMG = 2
 
 function init(self)
 	self.vel = vmath.vector3()
@@ -6,10 +7,16 @@ end
 
 function on_message(self, message_id, message, sender)
 	if message_id == hash("skeleton_hit") then 
-		skeleton_health = skeleton_health - 2
+		skeleton_health = skeleton_health - message.warrior_dmg
 		if skeleton_health <= 0 then
 			go.delete()
 			skeleton_health = 10
 		end
+	end
+
+	if message_id == hash("contact_point_response") 
+	and	message.group == hash("character") 
+	and sender.fragment == hash("skeleton_collision") then
+		msg.post("/warrior#warrior", "warrior_hit", {SKELETON_DMG = SKELETON_DMG})
 	end
 end
