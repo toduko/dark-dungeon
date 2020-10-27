@@ -51,7 +51,7 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("warrior_hit") 
 	and invincibility <= 0 then
 		
-		other_knockback_power = message.skeleton_knockback_power * 100
+		other_knockback_power = message.skeleton_knockback_power * 200
 		took_dmg = true
 		
 		dmg = message.SKELETON_DMG - warrior_armor
@@ -100,6 +100,7 @@ function update(self, dt)
 	
 	self.vel.x = 0
 	self.vel.y = 0
+	other_knockback_power = 0
 
 
 end
