@@ -1,8 +1,10 @@
 extends KinematicBody2D
 
 export var MOVEMENT_SPEED = 100
+export var MAX_ATTACK_CD = 25
 
 var isAttacking = false
+var attack_cd = 0
 
 var direction = 1
 
@@ -14,7 +16,7 @@ func _ready():
 
 func _physics_process(_delta):
 	var velocity = Vector2()
-#	var attack_pressed = Input.is_action_pressed("attack")
+	var attack_pressed = Input.is_action_pressed("attack")
 	var walk_left = Input.is_action_pressed("walk_left")
 	var walk_up = Input.is_action_pressed("walk_up")
 	var walk_right = Input.is_action_pressed("walk_right")
@@ -34,18 +36,24 @@ func _physics_process(_delta):
 		
 	self.scale.x = self.scale.y * direction
 	
-	if walking:	
+	if attack_pressed:
+		walking = false
+		attack_cd = MAX_ATTACK_CD
+		velocity = Vector2.ZERO
+		$AnimatedSprite.play("attack")
+		isAttacking = true
+		$Attack_collision/Sword_collision.disabled = false
+	
+	if walking:
 		$AnimatedSprite.play("walk")
+	elif attack_cd > 0:
+		attack_cd -= 1
 	else:
 		$AnimatedSprite.play("idle")
 		
-#	if attack_pressed:
-#		$AnimatedSprite.play("attack")
-#		isAttacking = true
-#		$Attack_collision/Sword_collision.disabled = false
-		
 	velocity = move_and_slide(velocity * MOVEMENT_SPEED)
 
-#func _on_AnimatedSprite_animation_finished():
-#	if $AnimatedSprite.animation == "attack":
-#		$Attack_collision/Sword_collision.disabled = true
+func _on_AnimatedSprite_animation_finished():
+		if $AnimatedSprite.animation == "attack":
+			$Attack_collision/Sword_collision.disabled = true
+			print("attack finished")

@@ -13,7 +13,6 @@ func skeleton_spawner():
 	var y = random_number.randf_range(0, screen_size.y)
 	skeleton_instance.position.x = x
 	skeleton_instance.position.y = y
-	print(screen_size)
 
 
 func _ready():
