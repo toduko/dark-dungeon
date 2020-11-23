@@ -36,24 +36,20 @@ func _physics_process(_delta):
 		
 	self.scale.x = self.scale.y * direction
 	
-	if attack_pressed:
-		walking = false
-		attack_cd = MAX_ATTACK_CD
-		velocity = Vector2.ZERO
-		$AnimatedSprite.play("attack")
-		isAttacking = true
-		$Attack_collision/Sword_collision.disabled = false
-	
-	if walking:
-		$AnimatedSprite.play("walk")
-	elif attack_cd > 0:
+	if attack_cd == 0:
+		$Attack_collision/Sword_collision.disabled = true
+		if attack_pressed:
+			attack_cd = MAX_ATTACK_CD
+			$AnimatedSprite.play("attack")
+			isAttacking = true
+			$Attack_collision/Sword_collision.disabled = false
+	if attack_cd > 0:
 		attack_cd -= 1
+		velocity = Vector2.ZERO
+		walking = false
+	elif walking:
+		$AnimatedSprite.play("walk")
 	else:
 		$AnimatedSprite.play("idle")
 		
 	velocity = move_and_slide(velocity * MOVEMENT_SPEED)
-
-func _on_AnimatedSprite_animation_finished():
-		if $AnimatedSprite.animation == "attack":
-			$Attack_collision/Sword_collision.disabled = true
-			print("attack finished")
