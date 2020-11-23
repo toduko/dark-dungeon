@@ -11,6 +11,11 @@
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
+"frames": [ ExtResource( 1 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 2 ), ExtResource( 3 ) ],
 "loop": true,
 "name": "attack",
@@ -20,11 +25,6 @@ animations = [ {
 "loop": true,
 "name": "walk",
 "speed": 8.0
-}, {
-"frames": [ ExtResource( 1 ) ],
-"loop": true,
-"name": "idle",
-"speed": 5.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=2]
@@ -40,7 +40,6 @@ script = ExtResource( 8 )
 scale = Vector2( 7, 7 )
 frames = SubResource( 1 )
 animation = "attack"
-frame = 2
 playing = true
 
 [node name="Hero_collision" type="CollisionShape2D" parent="."]
