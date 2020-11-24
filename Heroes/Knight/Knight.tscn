@@ -16,14 +16,14 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 6 ), ExtResource( 7 ) ],
-"loop": true,
-"name": "walk",
-"speed": 8.0
-}, {
 "frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 2 ), ExtResource( 3 ) ],
 "loop": true,
 "name": "attack",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 6 ), ExtResource( 7 ) ],
+"loop": true,
+"name": "walk",
 "speed": 8.0
 } ]
 
@@ -34,23 +34,29 @@ extents = Vector2( 37.2971, 56.6603 )
 extents = Vector2( 17.8498, 34.6786 )
 
 [node name="Knight" type="KinematicBody2D"]
+position = Vector2( 17, 0 )
+collision_layer = 6
+collision_mask = 2147483649
 script = ExtResource( 8 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 7, 7 )
 frames = SubResource( 1 )
 animation = "attack"
-playing = true
 
 [node name="Hero_collision" type="CollisionShape2D" parent="."]
-position = Vector2( -16.9897, -0.471931 )
+position = Vector2( -17, 0 )
+scale = Vector2( 1, 1 )
 shape = SubResource( 2 )
 
-[node name="Attack_collision" type="Area2D" parent="." groups=[
-"Sword",
-]]
+[node name="Attack_collision" type="Area2D" parent="."]
+scale = Vector2( 7, 7 )
+collision_layer = 0
+collision_mask = 8
 
 [node name="Sword_collision" type="CollisionShape2D" parent="Attack_collision"]
-position = Vector2( 38.377, -22.602 )
+position = Vector2( 5.48243, -3.22886 )
+scale = Vector2( 0.142857, 0.142857 )
 shape = SubResource( 3 )
 disabled = true
+[connection signal="body_entered" from="Attack_collision" to="." method="_on_Attack_collision_body_entered"]
