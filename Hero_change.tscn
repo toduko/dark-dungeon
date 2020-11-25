@@ -1,0 +1,44 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Hero_change.gd" type="Script" id=1]
+
+[node name="Hero_change" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Knight" type="Button" parent="."]
+margin_left = 420.0
+margin_top = 180.0
+margin_right = 600.0
+margin_bottom = 240.119
+text = "Knight"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Wizard" type="Button" parent="."]
+margin_left = 420.476
+margin_top = 280.0
+margin_right = 600.0
+margin_bottom = 340.768
+text = "Wizard"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Exit" type="Button" parent="."]
+margin_left = 420.0
+margin_top = 380.0
+margin_right = 600.0
+margin_bottom = 440.0
+text = "Exit"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="Knight" to="." method="_on_Knight_pressed"]
+[connection signal="pressed" from="Wizard" to="." method="_on_Wizard_pressed"]
+[connection signal="pressed" from="Exit" to="." method="_on_Exit_pressed"]

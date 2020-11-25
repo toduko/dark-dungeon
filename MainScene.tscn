@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Enemies/spawn_skeleton.gd" type="Script" id=1]
+
+[node name="Node2D" type="Node2D"]
+position = Vector2( 511.52, 324.822 )
+
+[node name="Skeleton_spawner" type="Node2D" parent="."]
+script = ExtResource( 1 )
