@@ -5,6 +5,7 @@ var MAX_ATTACK_CD = 0
 var attack_cd = 0
 var direction = 1
 
+
 func _ready():
 	pass
 

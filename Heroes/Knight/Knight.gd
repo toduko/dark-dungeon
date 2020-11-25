@@ -1,6 +1,8 @@
 extends "res://Heroes/player.gd"
 
 var ATTACK_FORCE = 5
+var MAX_HEALTH = 10
+var health = MAX_HEALTH
 
 func _ready():
 	MOVEMENT_SPEED = 100
@@ -15,7 +17,7 @@ func handle_attack(attack_pressed):
 
 
 func _on_Attack_collision_body_entered(body):
-	body.hp -= ATTACK_FORCE
-	print(body.hp)
-	if body.hp <= 0:
+	body.health -= ATTACK_FORCE
+	print(body.health)
+	if body.health <= 0:
 		body.queue_free()
