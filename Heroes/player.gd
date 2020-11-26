@@ -2,8 +2,10 @@ extends KinematicBody2D
 
 var MOVEMENT_SPEED = 0
 var MAX_ATTACK_CD = 0
+var ATTACK_DAMAGE = 0
 var attack_cd = 0
 var direction = 1
+var health = 0
 
 
 func _ready():
@@ -44,5 +46,6 @@ func _physics_process(_delta):
 		
 	velocity = move_and_slide(velocity * MOVEMENT_SPEED)
 	
+
 func handle_attack(attack_pressed):
 	pass
