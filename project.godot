@@ -19,6 +19,10 @@ config/name="Dark_Dungeon"
 run/main_scene="res://Hero_change.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+GlobalVars="*res://Scripts/global_vars.gd"
+
 [debug]
 
 settings/fps/force_fps=60

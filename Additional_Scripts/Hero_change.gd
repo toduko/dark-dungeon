@@ -11,6 +11,7 @@ func _on_Knight_pressed():
 	knight.position.x = 400
 	knight.position.y = 300
 	get_tree().get_root().call_deferred("add_child", knight)
+	GlobalVars.player_type = "Knight"
 	
 	get_tree().change_scene("res://MainScene.tscn")
 
@@ -21,6 +22,7 @@ func _on_Wizard_pressed():
 	wizard.position.x = 400
 	wizard.position.y = 300
 	get_tree().get_root().call_deferred("add_child", wizard)
+	GlobalVars.player_type = "Wizard"
 	
 	get_tree().change_scene("res://MainScene.tscn")
 

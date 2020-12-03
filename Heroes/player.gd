@@ -6,6 +6,9 @@ var ATTACK_DAMAGE = 0
 var attack_cd = 0
 var direction = 1
 var health = 0
+var MAX_INV_TIMER = 200
+var inv_timer = 0
+var player_hit = false
 
 
 func _ready():
@@ -43,7 +46,15 @@ func _physics_process(_delta):
 		$AnimatedSprite.play("walk")
 	else:
 		$AnimatedSprite.play("idle")
-		
+	
+	
+	if inv_timer > 0:
+		inv_timer -= 1
+	
+	if player_hit:
+		inv_timer = MAX_INV_TIMER
+		player_hit = false
+	
 	velocity = move_and_slide(velocity * MOVEMENT_SPEED)
 	
 

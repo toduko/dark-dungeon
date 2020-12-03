@@ -15,7 +15,6 @@ func _physics_process(delta):
 
 func handle_attack(attack_pressed):
 	if attack_pressed and attack_cd == 0:
-		print(attack_cd)
 		attack_cd = MAX_ATTACK_CD
 		$AnimatedSprite.play("attack")
 		$Attack_collision/Sword_collision.disabled = false
@@ -23,6 +22,5 @@ func handle_attack(attack_pressed):
 
 func _on_Attack_collision_body_entered(body):
 	body.health -= ATTACK_DAMAGE
-	print(body.health)
 	if body.health <= 0:
 		body.queue_free()
